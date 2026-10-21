@@ -1,0 +1,6 @@
+require('lib.components.input_movement')
+require('lib.components.movement')
+require('lib.components.movement_direction')
+require('lib.components.position')
+require('lib.components.velocity')
+require('lib.components.sprite')
