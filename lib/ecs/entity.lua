@@ -1,6 +1,8 @@
 Entity = {}
 Entity.__index = Entity
 
+local unpack = unpack or table.unpack
+
 function Entity.new()
     local self = setmetatable({}, Entity)
     self.components = {}
