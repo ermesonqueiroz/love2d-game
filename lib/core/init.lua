@@ -1,1 +1,1 @@
-require('lib.core.state_machine')
+StateMachine = require('lib.core.state_machine')

@@ -1,4 +1,4 @@
-StateMachine = {}
+local StateMachine = {}
 StateMachine.__index = StateMachine
 
 function StateMachine.new(entity)
@@ -18,7 +18,7 @@ function StateMachine:change(name, ...)
         error("State not found: " .. tostring(name))
     end
 
-    local currentState = self.states[name]
+    local currentState = self.states[self.currentState]
 
     if currentState and currentState.exit then
         currentState.exit(self, self.entity)
@@ -38,3 +38,5 @@ function StateMachine:update(dt)
         currentState.update(self, self.entity, dt)
     end
 end
+
+return StateMachine
