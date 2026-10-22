@@ -1,3 +1,6 @@
 [submodule "anim8"]
 	path = 3rd/anim8
 	url = git@github.com:kikito/anim8.git
+[submodule "3rd/luaunit"]
+	path = 3rd/luaunit
+	url = git@github.com:bluebird75/luaunit.git
