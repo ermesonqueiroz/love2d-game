@@ -1,3 +1,5 @@
 luacov*
 
 .DS_STORE
+
+build/
