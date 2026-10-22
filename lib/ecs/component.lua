@@ -1,4 +1,4 @@
-function Component(name)
+local function Component(name)
     local compClass = {}
     compClass.__index = compClass
     compClass.__name = name
@@ -17,3 +17,5 @@ function Component(name)
 
     return compClass
 end
+
+return Component
