@@ -1,0 +1,82 @@
+name: CD
+
+env:
+  CORE_LOVE_PACKAGE_PATH: ./build/core.love
+  CORE_LOVE_ARTIFACT_NAME: core_love_package
+  PRODUCT_NAME: game
+  BUNDLE_ID: com.github.ermesonqueiroz.game
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-core:
+    name: Build Core LÖVE Package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install 7-Zip dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y p7zip-full
+
+      - name: Build bare love package
+        uses: love-actions/love-actions-core@v1
+        with:
+          build-list: ./sprites/ ./lib/ ./3rd/ ./main.lua
+          package-path: ${{ env.CORE_LOVE_PACKAGE_PATH }}
+
+      - name: Upload core love package
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.CORE_LOVE_ARTIFACT_NAME }}
+          path: ${{ env.CORE_LOVE_PACKAGE_PATH }}
+  
+  build-windows:
+    name: Build Windows
+    runs-on: windows-latest
+    needs: [build-core]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      
+      - name: Download core love package
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.CORE_LOVE_ARTIFACT_NAME }}
+          path: ./build
+
+      - name: Generate version
+        uses: onyxmueller/build-tag-number@v1
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Build Windows packages
+        id: build-packages
+        uses: love-actions/love-actions-windows@v1
+        with:
+          love-package: ${{ env.CORE_LOVE_PACKAGE_PATH }}
+          product-name: ${{ env.PRODUCT_NAME }}
+          app-id: ${{ secrets.APP_ID }}
+          output-folder: ./build
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ./build/*
+          name: Build ${{ env.BUILD_NUMBER }}
+          draft: true
+          prerelease: true
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
