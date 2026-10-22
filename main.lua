@@ -1,3 +1,8 @@
+-- 3rd party dependencies
+anim8 = require('3rd.anim8.anim8')
+
+-- Local dependencies
+require('lib.core')
 require('lib.ecs')
 require('lib.components')
 require('lib.systems')
@@ -13,6 +18,8 @@ function love.load()
     world:addSystem(PlayerInputSystem, InputMovementComponent, MovementDirectionComponent)
     world:addSystem(MovementSystem, PositionComponent, VelocityComponent, MovementComponent, MovementDirectionComponent)
     world:addSystem(RenderSpriteSystem, PositionComponent, SpriteComponent)
+    world:addSystem(RenderAnimatedSpriteSystem, PositionComponent, AnimatedSpriteComponent, TransformComponent)
+    world:addSystem(StateMachineSystem, StateMachineComponent)
 end
 
 function love.update(dt)
