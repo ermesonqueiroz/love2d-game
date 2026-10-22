@@ -1,0 +1,4 @@
+.luacov
+luacov*
+
+.DS_STORE
