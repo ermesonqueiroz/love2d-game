@@ -1,0 +1,41 @@
+{
+	"identifier": "Level_0",
+	"uniqueIdentifer": "5e510280-bde0-11f1-bdfd-f3bb671641e1",
+	"x": 0,
+	"y": 0,
+	"width": 512,
+	"height": 256,
+	"bgColor": "#696A79",
+	"neighbourLevels": [],
+	"customFields" : {},
+	"layers": [
+		"Background.png",
+		"Collision.png"
+	],
+	"entities": {
+		"Player": [
+			{
+				"id": "Player",
+				"iid": "b62274d0-bde0-11f1-9c25-c78986ef47fe",
+				"layer": "Entities",
+				"x": 224,
+				"y": 128,
+				"width": 32,
+				"height": 32,
+				"color": 6539085,
+				"customFields" : {}
+			},
+			{
+				"id": "Player",
+				"iid": "b711dde0-bde0-11f1-9c25-f1146fb0a2e6",
+				"layer": "Entities",
+				"x": 16,
+				"y": 160,
+				"width": 32,
+				"height": 32,
+				"color": 6539085,
+				"customFields" : {}
+			}
+		]
+	}
+}

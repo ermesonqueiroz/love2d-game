@@ -1,3 +1,6 @@
 [submodule "anim8"]
 	path = 3rd/anim8
 	url = git@github.com:kikito/anim8.git
+[submodule "3rd/json"]
+	path = 3rd/json
+	url = git@github.com:rxi/json.lua.git

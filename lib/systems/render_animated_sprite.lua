@@ -19,8 +19,7 @@ function RenderAnimatedSpriteSystem.draw(entities)
             sprite.image,
             position.x, position.y,
             nil,
-            transform.scaleX, transform.scaleY,
-            sprite.frameWidth / 2, sprite.frameHeight / 2
+            transform.scaleX, transform.scaleY
         )
     end
 end
