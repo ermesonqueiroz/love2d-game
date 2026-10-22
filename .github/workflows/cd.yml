@@ -71,9 +71,11 @@ jobs:
           output-folder: ./build
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
-          files: ./build/*
+          files: |
+            build/${{ env.PRODUCT_NAME }}_x86.zip
+            build/${{ env.PRODUCT_NAME }}_x64.zip
           name: Build ${{ env.BUILD_NUMBER }}
           tag_name: ${{ env.BUILD_NUMBER }}
           draft: true
