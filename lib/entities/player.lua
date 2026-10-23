@@ -35,19 +35,23 @@ local function update_walk_state(stateMachine, entity, _)
     if direction.dx == 0 then stateMachine:change('idle') end
 end
 
-function Player.new()
+function Player.new(...)
     local player = setmetatable(Entity.new(), Player)
-    player:init()
+    player:init(...)
     return player
 end
 
-function Player:init()
-    self:addComponent(PositionComponent.new(0, 0))
+function Player:init(physicsWorld, x, y)
+    self:addComponent(PositionComponent.new(x, y))
     self:addComponent(TransformComponent.new(1, 1))
     self:addComponent(InputMovementComponent.new())
     self:addComponent(VelocityComponent.new(0, 0))
-    self:addComponent(MovementComponent.new(100, 200, 400))
+    self:addComponent(MovementComponent.new(100, 200, 200))
     self:addComponent(MovementDirectionComponent.new())
+    self:addComponent(ColliderComponent.new(
+        physicsWorld:newCollider('Rectangle', { x + 16, y + 18, 16, 20 }),
+        16, 18
+    ))
 
     local image = love.graphics.newImage('sprites/knight.png')
     local grid = anim8.newGrid(32, 32, image:getWidth(), image:getHeight())

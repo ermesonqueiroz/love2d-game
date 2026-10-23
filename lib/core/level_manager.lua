@@ -1,37 +1,33 @@
 local hexcolor = require('lib.utils.hexcolor')
 
 local LevelManager = {
-    world = nil,
+    ecsWorld = nil,
     activeLevel = nil,
     activeLevelEntities = {}
 }
 
-local function spawnEntities(world, entities)
+local function spawnEntities(ecsWorld, physicsWorld, entities)
     for entityType, items in pairs(entities) do
         for _, item in ipairs(items) do
             if entityType == "Player" then
-                local player = Player.new()
+                local player = Player.new(physicsWorld, item.x, item.y)
                 local position = player:getComponent(PositionComponent)
 
-
-                print(position)
-                position.x = item.x
-                position.y = item.y
-
                 table.insert(LevelManager.activeLevelEntities, player)
-                world:addEntity(player)
+                ecsWorld:addEntity(player)
             end
         end
     end
 end
 
-function LevelManager:init(world)
-    self.world = world
+function LevelManager:init(ecsWorld, physicsWorld)
+    self.ecsWorld = ecsWorld
+    self.physicsWorld = physicsWorld
 end
 
 function LevelManager:load(level)
     self.activeLevel = level
-    spawnEntities(self.world, self.activeLevel.entities)
+    spawnEntities(self.ecsWorld, self.physicsWorld, self.activeLevel.entities)
 end
 
 function LevelManager:draw()

@@ -4,3 +4,6 @@
 [submodule "3rd/json"]
 	path = 3rd/json
 	url = git@github.com:rxi/json.lua.git
+[submodule "3rd/breezefield"]
+	path = 3rd/breezefield
+	url = git@github.com:HDictus/breezefield.git
