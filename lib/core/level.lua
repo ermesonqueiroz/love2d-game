@@ -1,6 +1,28 @@
 local Level = {}
 Level.__index = Level
 
+local function loadCollisionGrid(path)
+    local contents, err = love.filesystem.read(path)
+    assert(contents, err)
+
+    local grid = {}
+
+    for line in contents:gmatch("[^\r\n]+") do
+        local normalizedLine = line:gsub("%s+$", ""):gsub(",$", "")
+        local row = {}
+
+        for token in (normalizedLine .. ","):gmatch("(.-),") do
+            local value = tonumber(token)
+            assert(value, "Invalid value in collision CSV")
+            row[#row + 1] = value
+        end
+
+        grid[#grid + 1] = row
+    end
+
+    return grid
+end
+
 function Level.new(level)
     local self = setmetatable({}, Level)
 
@@ -14,6 +36,7 @@ function Level.new(level)
     self.y = data.y
     self.bgColor = data.bgColor
     self.entities = data.entities
+    self.collisionGrid = loadCollisionGrid(self.basePath.."Collision.csv")
 
     return self
 end

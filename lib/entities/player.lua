@@ -48,10 +48,12 @@ function Player:init(physicsWorld, x, y)
     self:addComponent(VelocityComponent.new(0, 0))
     self:addComponent(MovementComponent.new(100, 200, 200))
     self:addComponent(MovementDirectionComponent.new())
-    self:addComponent(ColliderComponent.new(
-        physicsWorld:newCollider('Rectangle', { x + 16, y + 18, 16, 20 }),
-        16, 18
-    ))
+
+    local colliderOffsetX, colliderOffsetY = 16, 18
+    local collider = physicsWorld:newCollider('Rectangle', { x + colliderOffsetX, y + colliderOffsetY, 16, 20 })
+    self:addComponent(ColliderComponent.new(collider, colliderOffsetX, colliderOffsetY))
+    collider:setFixedRotation(true)
+    collider:setFriction(0)
 
     local image = love.graphics.newImage('sprites/knight.png')
     local grid = anim8.newGrid(32, 32, image:getWidth(), image:getHeight())

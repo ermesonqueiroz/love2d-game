@@ -16,9 +16,6 @@ function love.load()
     physicsWorld = bf.newWorld(0, 90.81, true)
     world = ECSWorld.new()
 
-    ground = physicsWorld:newCollider("Polygon", {0, 512, 0, 256, 512, 256, 0, 192, 512, 192})
-    ground:setType("static")
-
     LevelManager:init(world, physicsWorld)
 
     world:loadEntities()
